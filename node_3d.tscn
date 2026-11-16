@@ -1,0 +1,116 @@
+[gd_scene format=3 uid="uid://dkv6iwk0wglen"]
+
+[ext_resource type="Script" uid="uid://d4jtcvb8mcfvh" path="res://player_character+anchor_y.gd" id="1_noarx"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_a202f"]
+sun_angle_max = 2.0
+sun_curve = 1.0090758
+energy_multiplier = 2.0
+
+[sub_resource type="Sky" id="Sky_d0u6y"]
+sky_material = SubResource("ProceduralSkyMaterial_a202f")
+
+[sub_resource type="Environment" id="Environment_g4v7s"]
+background_mode = 2
+sky = SubResource("Sky_d0u6y")
+
+[sub_resource type="Gradient" id="Gradient_7numd"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_3gngh"]
+noise_type = 5
+frequency = 0.05
+metadata/_preview_in_3d_space_ = true
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_d0u6y"]
+noise = SubResource("FastNoiseLite_3gngh")
+color_ramp = SubResource("Gradient_7numd")
+seamless = true
+as_normal_map = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_57qmd"]
+albedo_color = Color(0.56022215, 0.56022215, 0.56022215, 1)
+roughness = 0.5
+roughness_texture = SubResource("NoiseTexture2D_d0u6y")
+uv1_scale = Vector3(10, 10, 10)
+uv2_scale = Vector3(10, 10, 10)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_g4v7s"]
+material = SubResource("StandardMaterial3D_57qmd")
+
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_57qmd"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_g4v7s"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_yf5fn"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_57qmd"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_noarx"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_g4v7s"]
+material = SubResource("StandardMaterial3D_noarx")
+
+[node name="Node3D" type="Node3D" unique_id=1179502650]
+metadata/_tc_uuid = "6543720197427322146"
+
+[node name="WorldStuff" type="Node3D" parent="." unique_id=345645383]
+metadata/_tc_offline_added = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="WorldStuff" unique_id=1326883630]
+environment = SubResource("Environment_g4v7s")
+metadata/_tc_offline_added = true
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="WorldStuff/WorldEnvironment" unique_id=793812420]
+transform = Transform3D(1, 0, 0, 0, 0.8660254, 0.5, 0, -0.5, 0.8660254, 0, 0, 0)
+light_color = Color(0.99999994, 0.9287303, 0.6994592, 1)
+shadow_enabled = true
+metadata/_tc_offline_added = true
+
+[node name="Geometry" type="Node3D" parent="WorldStuff" unique_id=1562914646]
+metadata/_tc_offline_added = true
+
+[node name="StaticBody3D" type="StaticBody3D" parent="WorldStuff/Geometry" unique_id=2140335341]
+transform = Transform3D(100, 0, 0, 0, 100, 0, 0, 0, 100, 0, 0, 0)
+metadata/_tc_offline_added = true
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="WorldStuff/Geometry/StaticBody3D" unique_id=766428095]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.8326335e-05, -2.3841857e-09, 2.2678374e-05)
+mesh = SubResource("PlaneMesh_g4v7s")
+metadata/_tc_offline_added = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="WorldStuff/Geometry/StaticBody3D" unique_id=2124370612]
+shape = SubResource("WorldBoundaryShape3D_57qmd")
+metadata/_tc_offline_added = true
+
+[node name="StaticBody3D2" type="StaticBody3D" parent="WorldStuff/Geometry" unique_id=2124400043]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 6.5)
+metadata/_tc_offline_added = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="WorldStuff/Geometry/StaticBody3D2" unique_id=757311165]
+shape = SubResource("BoxShape3D_g4v7s")
+metadata/_tc_offline_added = true
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="WorldStuff/Geometry/StaticBody3D2" unique_id=279226516]
+mesh = SubResource("BoxMesh_yf5fn")
+metadata/_tc_offline_added = true
+
+[node name="PlayerCharacter+AnchorY" type="CharacterBody3D" parent="." unique_id=1991245177]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+script = ExtResource("1_noarx")
+metadata/_tc_offline_added = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PlayerCharacter+AnchorY" unique_id=1492618450]
+shape = SubResource("CapsuleShape3D_57qmd")
+metadata/_tc_offline_added = true
+
+[node name="Head" type="Node3D" parent="PlayerCharacter+AnchorY/CollisionShape3D" unique_id=1076839495]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+metadata/_tc_offline_added = true
+
+[node name="Camera3D" type="Camera3D" parent="PlayerCharacter+AnchorY/CollisionShape3D/Head" unique_id=957935920]
+metadata/_tc_offline_added = true
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="PlayerCharacter+AnchorY" unique_id=2121520713]
+gi_mode = 2
+mesh = SubResource("CapsuleMesh_g4v7s")
+metadata/_tc_offline_added = true

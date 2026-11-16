@@ -1,0 +1,6 @@
+res://node_3d.tscn
+res://camera_anchor.gd
+res://character_body_3d.gd
+res://camera_anchor_x.gd
+res://camera.gd
+res://player_character+anchor_y.gd
